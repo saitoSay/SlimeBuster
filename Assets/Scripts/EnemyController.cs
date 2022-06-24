@@ -95,7 +95,7 @@ public class EnemyController : MonoBehaviour
                 },
                 (float)m_life / m_maxLife,
                 1f);
-            GameManager.s_enemyCount--;
+            GameManager.Instance.m_enemyCount--;
         }
         else
         {
@@ -109,7 +109,7 @@ public class EnemyController : MonoBehaviour
                 1f);
         }
     }
-    public void AnimationDestroy()
+    public void Die()
     {
         Destroy(this.gameObject);
     }

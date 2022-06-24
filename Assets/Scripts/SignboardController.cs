@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>看板を操作するクラス</summary>
 public class SignboardController : MonoBehaviour
 {
     [SerializeField] Animator m_anim;

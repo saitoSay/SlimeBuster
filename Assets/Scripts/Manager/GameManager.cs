@@ -11,10 +11,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject m_playerPos;
     [SerializeField] GameObject[] m_enemysPos;
     GameObject[] m_enemyArray;
-    public static int s_enemyCount;
+    public int m_enemyCount;
     float m_timer = 0;
     [SerializeField] GameObject textObj;
     Text text;
+    private static GameManager instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                var obj = new GameObject("GameManager");
+                var manager = obj.AddComponent<GameManager>();
+                instance = manager;
+                DontDestroyOnLoad(obj);
+            }
+            return instance;
+        }
+    }
     void Awake()
     {
         if (gameStartFrag)
@@ -22,7 +37,7 @@ public class GameManager : MonoBehaviour
             ReStart();
         }
         m_enemyArray = GameObject.FindGameObjectsWithTag("Enemy");
-        s_enemyCount = m_enemyArray.Length;
+        m_enemyCount = m_enemyArray.Length;
     }
     private void Start()
     {
@@ -30,8 +45,8 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        text.text = "残りスライムの数 : " + s_enemyCount.ToString();
-        if (s_enemyCount <= 0)
+        text.text = "残りスライムの数 : " + m_enemyCount.ToString();
+        if (m_enemyCount <= 0)
         {
             m_timer += Time.deltaTime;
             if (m_timer > 3)

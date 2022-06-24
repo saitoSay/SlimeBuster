@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>アイコンを回転させるクラス</summary>
 public class lockonIconController : MonoBehaviour
 {
     RectTransform rectTransform;
