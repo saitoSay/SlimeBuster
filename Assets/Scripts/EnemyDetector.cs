@@ -8,12 +8,14 @@ public class EnemyDetector : MonoBehaviour
     [SerializeField] float m_targetRange = 4f;
     /// <summary>敵の検出を行う間隔（単位: 秒）</summary>
     [SerializeField] float m_detectInterval = 1f;
-    /// <summary>ロックオンしているオブジェクト</summary>
-    GameObject m_target = null;
     public static bool m_lockonFrag = false;
     float m_timer;
 
     GameObject[] images;
+    /// <summary>
+    /// ロックオンしている敵
+    /// </summary>
+    public GameObject Target { get; private set; }
     private void Start()
     {
         images = GameObject.FindGameObjectsWithTag("Image");
@@ -21,14 +23,6 @@ public class EnemyDetector : MonoBehaviour
         {
             item.SetActive(false);
         }
-    }
-
-    /// <summary>
-    /// ロックオンしている敵を取得する
-    /// </summary>
-    public GameObject Target
-    {
-        get { return m_target; }
     }
 
     void Update()
@@ -80,20 +74,20 @@ public class EnemyDetector : MonoBehaviour
 
                 if (distance < m_targetRange)
                 {
-                    if (m_target == null || distance < Vector3.Distance(this.transform.position, m_target.transform.position) && !m_lockonFrag)
+                    if (Target == null || distance < Vector3.Distance(this.transform.position, Target.transform.position) && !m_lockonFrag)
                     {
-                        m_target = enemy;
+                        Target = enemy;
                     }
                 }
             }
         }
 
         // ロックオンしているターゲットが索敵範囲外に出たらロックオンをやめる
-        if (m_target)
+        if (Target)
         {
-            if (m_targetRange < Vector3.Distance(this.transform.position, m_target.transform.position))
+            if (m_targetRange < Vector3.Distance(this.transform.position, Target.transform.position))
             {
-                m_target = null;
+                Target = null;
                 images = GameObject.FindGameObjectsWithTag("Image");
                 foreach (var item in images)
                 {

@@ -5,6 +5,8 @@ using UnityEngine;
 /// <summary>アイコンを回転させるクラス</summary>
 public class lockonIconController : MonoBehaviour
 {
+    [Tooltip("回転速度")]
+    [SerializeField] float m_rotateSpeed;
     RectTransform rectTransform;
     void Start()
     {
@@ -13,6 +15,6 @@ public class lockonIconController : MonoBehaviour
 
     void Update()
     {
-        rectTransform.Rotate(0, 0, -1f);
+        rectTransform.Rotate(0, 0, m_rotateSpeed);
     }
 }
