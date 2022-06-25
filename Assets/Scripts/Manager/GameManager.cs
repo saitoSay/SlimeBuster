@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 public class GameManager : MonoBehaviour
 {
     public static bool gameStartFrag = true;
@@ -13,8 +11,8 @@ public class GameManager : MonoBehaviour
     GameObject[] m_enemyArray;
     public int m_enemyCount;
     float m_timer = 0;
-    [SerializeField] GameObject textObj;
-    Text text;
+    [SerializeField] Text m_textObj;
+    [SerializeField] string m_missionText;
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -32,20 +30,18 @@ public class GameManager : MonoBehaviour
     }
     void Awake()
     {
+        instance = this;
         if (gameStartFrag)
         {
             ReStart();
         }
         m_enemyArray = GameObject.FindGameObjectsWithTag("Enemy");
         m_enemyCount = m_enemyArray.Length;
-    }
-    private void Start()
-    {
-        text = textObj.GetComponent<Text>();
+        m_textObj.text = m_missionText + m_enemyCount.ToString();
     }
     private void Update()
     {
-        text.text = "残りスライムの数 : " + m_enemyCount.ToString();
+        m_textObj.text = "残りスライムの数 : " + m_enemyCount.ToString();
         if (m_enemyCount <= 0)
         {
             m_timer += Time.deltaTime;
@@ -53,18 +49,22 @@ public class GameManager : MonoBehaviour
             {
                 GameObject audioObj = GameObject.Find("Audio Source");
                 Destroy(audioObj);
-                SceneManager.LoadScene(2);
+                SceneChanger.LoadScene("EndScene");
             }
         }
     }
     public void ReStart()
     {
-        //Instantiate(m_playerPrefab, m_playerPos.transform);
         for (int i = 0; i < m_enemysPos.Length; i++)
         {
             Instantiate(m_enemyPrefab, m_enemysPos[i].transform);
         }
         gameStartFrag = false;
         GameOverFadeOut.Instance.StartScene();
+    }
+    public void SubEnemyCount()
+    {
+        m_enemyCount--;
+        m_textObj.text = m_missionText + m_enemyCount.ToString();
     }
 }

@@ -32,7 +32,7 @@ public class GameOverFadeOut : MonoBehaviour
     }
     public void LordGameScene()
     {
-        SceneManager.LoadScene(1);
+        SceneChanger.LoadScene("GameScene");
     }
     public void ChangeFrag()
     {

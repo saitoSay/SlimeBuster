@@ -28,6 +28,6 @@ public class SceneController : MonoBehaviour
     }
     public void LordGameScene()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("GameScene");
     }
 }

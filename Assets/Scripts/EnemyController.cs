@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -95,7 +93,7 @@ public class EnemyController : MonoBehaviour
                 },
                 (float)m_life / m_maxLife,
                 1f);
-            GameManager.Instance.m_enemyCount--;
+            GameManager.Instance.SubEnemyCount();
         }
         else
         {

@@ -19,7 +19,7 @@ public class EndSceneManager : MonoBehaviour
             m_text.SetActive(true);
             if (Input.anyKey)
             {
-                SceneManager.LoadScene(0);
+                SceneChanger.LoadScene("TitleScene");
             }
         }
     }
