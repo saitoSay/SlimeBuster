@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        m_textObj.text = "残りスライムの数 : " + m_enemyCount.ToString();
         if (m_enemyCount <= 0)
         {
             m_timer += Time.deltaTime;

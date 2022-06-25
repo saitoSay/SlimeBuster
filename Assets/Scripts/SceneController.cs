@@ -6,24 +6,24 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class SceneController : MonoBehaviour
 {
-    AudioSource audioSource;
-    [SerializeField] AudioClip sound;
-    Animator anim;
-    bool frag = false;
+    AudioSource m_audioSource;
+    [SerializeField] AudioClip m_sound;
+    Animator m_anim;
+    bool m_flag = false;
     
     private void Start()
     {
-        anim = GetComponent<Animator>();
-        frag = false;
-        audioSource = GetComponent<AudioSource>();
+        m_anim = GetComponent<Animator>();
+        m_flag = false;
+        m_audioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
-        if (Input.anyKeyDown && !frag)
+        if (Input.anyKeyDown && !m_flag)
         {
-            anim.SetBool("Trigger", true);
-            frag = true;
-            audioSource.PlayOneShot(sound);
+            m_anim.SetBool("Trigger", true);
+            m_flag = true;
+            m_audioSource.PlayOneShot(m_sound);
         }
     }
     public void LordGameScene()

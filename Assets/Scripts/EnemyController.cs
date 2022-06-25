@@ -30,45 +30,35 @@ public class EnemyController : MonoBehaviour
         m_lifeGauge.gameObject.SetActive(false);
         m_rb = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
+        m_player = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
     {
-        m_player = GameObject.FindGameObjectWithTag("Player");
-        if (m_player)
+        if (m_dieFrag || !m_player) return;
+        float distance = Vector3.Distance(this.transform.position, m_player.transform.position);
+        if (m_damageFrag)
         {
-            float distance = Vector3.Distance(this.transform.position, m_player.transform.position);
-            if (m_damageFrag)
-            {
-                m_rb.velocity = new Vector3(0, m_rb.velocity.y, 0);
-            }
-            else if (distance < m_targetRange && !m_dieFrag)
-            {
-                m_player = GameObject.FindGameObjectWithTag("Player");
-                Vector3 dir = m_player.transform.position - this.transform.position;
-                dir.y = 0;
-                this.transform.forward = dir;
+            m_rb.velocity = new Vector3(0, m_rb.velocity.y, 0);
+        }
+        else if (distance < m_targetRange)
+        {
+            Vector3 dir = m_player.transform.position - this.transform.position;
+            dir.y = 0;
+            this.transform.forward = dir;
 
-                if (distance < m_attackRange)
-                {
-                    m_anim.SetTrigger("AttackFrag");
-                    m_rb.velocity = new Vector3(0, m_rb.velocity.y, 0);
-                }
-                else if (m_rb.velocity.magnitude < m_maxSpeed)
-                {
-                    m_rb.AddForce(this.transform.forward * m_movePower);
-                }
-            }
-            else
+            if (distance < m_attackRange)
             {
+                m_anim.SetTrigger("AttackFrag");
                 m_rb.velocity = new Vector3(0, m_rb.velocity.y, 0);
+            }
+            else if (m_rb.velocity.magnitude < m_maxSpeed)
+            {
+                m_rb.AddForce(this.transform.forward * m_movePower);
             }
         }
-        if (m_player)
+        else
         {
-            if (m_targetRange < Vector3.Distance(this.transform.position, m_player.transform.position))
-            {
-                m_player = null;
-            }
+            m_rb.velocity = new Vector3(0, m_rb.velocity.y, 0);
         }
     }
     public void ResetAnim()
