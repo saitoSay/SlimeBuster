@@ -18,6 +18,7 @@ public class FadeController : MonoBehaviour
     {
         get
         {
+            //参照時に自身が無ければ黒いFade用Imageを作成し、自身をインスタンス化する
             if (instance == null)
             {
                 var obj = new GameObject("FadeCanvas");

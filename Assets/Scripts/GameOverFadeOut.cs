@@ -36,6 +36,6 @@ public class GameOverFadeOut : MonoBehaviour
     }
     public void ChangeFrag()
     {
-        GameManager.gameStartFrag = true;
+        GameManager.m_inGame = true;
     }
 }

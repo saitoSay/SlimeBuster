@@ -2412,8 +2412,8 @@ MonoBehaviour:
   - {fileID: 509390333}
   - {fileID: 120094480}
   - {fileID: 1516874172}
-  m_enemyCount: 0
-  m_textObj: {fileID: 49611310}
+  m_offTime: 3
+  m_missionTextObj: {fileID: 49611310}
   m_missionText: "\u6B8B\u308A\u30B9\u30E9\u30A4\u30E0\u306E\u6570 : "
 --- !u!4 &692187170
 Transform:
