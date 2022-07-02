@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// フェード処理を行うクラス
+/// </summary>
 public class FadeController : MonoBehaviour
 {
     [Tooltip("フェードスピード")]
@@ -13,12 +15,13 @@ public class FadeController : MonoBehaviour
     [Tooltip("開始時の色")]
     [SerializeField] private Color m_startColor = Color.black;
 
+
     private static FadeController instance = default;
     public static FadeController Instance
     {
         get
         {
-            //参照時に自身が無ければ黒いFade用Imageを作成し、自身をインスタンス化する
+            //参照時にインスタンスが無ければ、黒いFade用Imageを作成、自身をインスタンス化する
             if (instance == null)
             {
                 var obj = new GameObject("FadeCanvas");
@@ -53,6 +56,10 @@ public class FadeController : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+    /// <summary>
+    /// フェードする速度の変更
+    /// </summary>
+    /// <param name="speed">フェード速度</param>
     public void ChangeFadeSpeed(float speed)
     {
         m_fadeSpeed = speed;

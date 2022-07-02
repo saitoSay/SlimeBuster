@@ -5,10 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static bool m_inGame = true;
     [SerializeField] GameObject m_playerPrefab;
-    [SerializeField] GameObject m_enemyPrefab;
     [SerializeField] GameObject m_playerPos;
-    [SerializeField] GameObject[] m_enemysPos;
-    GameObject[] m_enemyArray;
     int m_enemyCount;
     [Tooltip("ゲームをクリアしてからシーン遷移するまでの時間")]
     [SerializeField] float m_offTime;
@@ -56,15 +53,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameStart()
     {
-        m_enemyArray = new GameObject[m_enemysPos.Length];
-        //敵をプレハブから出現させる
-        for (int i = 0; i < m_enemysPos.Length; i++)
-        {
-            m_enemyArray[i] = Instantiate(m_enemyPrefab, m_enemysPos[i].transform);
-        }
-        m_enemyCount = m_enemyArray.Length;
-        m_missionTextObj.text = m_missionText + m_enemyCount.ToString();
+        EventManager.GameStart();
+        //m_enemyCount = m_enemyArray.Length;
+        //m_missionTextObj.text = m_missionText + m_enemyCount.ToString();
         m_inGame = true;
+    }
+    /// <summary>
+    /// 残敵数を設定する
+    /// </summary>
+    public void SetEnemyCount()
+    {
+        m_enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
     }
     /// <summary>
     /// 残りの敵数を減らす処理

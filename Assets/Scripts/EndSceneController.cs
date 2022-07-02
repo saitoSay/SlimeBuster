@@ -7,13 +7,7 @@ public class EndSceneController : MonoBehaviour
 {
     [SerializeField]float m_timer = 0;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         m_timer += Time.deltaTime;
@@ -22,7 +16,7 @@ public class EndSceneController : MonoBehaviour
             this.gameObject.SetActive(true);
             if (Input.anyKey)
             {
-                SceneManager.LoadScene(0);
+                SceneChanger.LoadScene("TitleScene");
             }
         }
     }

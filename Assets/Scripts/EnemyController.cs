@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using DG.Tweening;
 
+/// <summary>
+/// Enemyを動かすクラス
+/// </summary>
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] int m_life = 1;
@@ -12,8 +15,6 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] float m_targetRange = 4f;
     [SerializeField] float m_attackRange = 2f;
-    [SerializeField] float m_detectInterval = 1f;
-    [SerializeField] float m_turnSpeed = 3f;
 
     Animator m_anim;
     GameObject m_player = null;
