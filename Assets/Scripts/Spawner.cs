@@ -13,9 +13,10 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         EventManager.OnGameStart += Spawn;
+        EventManager.OnGameEnd += () => EventManager.OnGameStart -= Spawn;
     }
     public void Spawn()
     {
-        Instantiate(m_prefab, this.transform);
+        Instantiate(m_prefab, this.gameObject.transform);
     }
 }

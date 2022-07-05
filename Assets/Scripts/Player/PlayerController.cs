@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     Animator m_anim;
     /// <summary>攻撃時の当たり判定</summary>
     [SerializeField] GameObject m_attackCollider = null;
+    [Tooltip("攻撃力")]
+    [SerializeField] int m_attackPower = 3;
+    public int AttackPower { get => m_attackPower; }
     /// <summary>現在の体力</summary>
     [SerializeField] int m_life = 1;
     /// <summary>体力の最大値</summary>

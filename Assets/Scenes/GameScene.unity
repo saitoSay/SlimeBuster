@@ -2435,13 +2435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerPrefab: {fileID: 2999099274967820598, guid: 4ba96ba4a7a72004aba1eb8cf3237a05,
     type: 3}
-  m_enemyPrefab: {fileID: 6174771257231708129, guid: b8b01d0c51acbb94dbf508b535240df3,
-    type: 3}
   m_playerPos: {fileID: 2064652629}
-  m_enemysPos:
-  - {fileID: 509390333}
-  - {fileID: 120094480}
-  - {fileID: 1516874172}
   m_offTime: 3
   m_missionTextObj: {fileID: 49611310}
   m_missionText: "\u6B8B\u308A\u30B9\u30E9\u30A4\u30E0\u306E\u6570 : "
@@ -2555,7 +2549,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &739589161 stripped
 Transform:
@@ -4595,7 +4589,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1315072461
 PrefabInstance:
@@ -4987,9 +4981,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1371354469}
   - component: {fileID: 1371354468}
-  - component: {fileID: 1371354470}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: SoundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5103,20 +5096,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1371354470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1371354467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c4d038ef1d80924a91717b65ce63e56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1371667036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5616,7 +5597,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1516874173
 Transform:
   m_ObjectHideFlags: 0
@@ -7299,7 +7280,7 @@ Transform:
   - {fileID: 1730081946}
   - {fileID: 129877202}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1974210718
 PrefabInstance:
@@ -8070,6 +8051,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 895810500, guid: 4ba96ba4a7a72004aba1eb8cf3237a05, type: 3}
+      propertyPath: m_attackPower
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1318490222, guid: 4ba96ba4a7a72004aba1eb8cf3237a05, type: 3}
       propertyPath: m_lifeGauge
       value: 

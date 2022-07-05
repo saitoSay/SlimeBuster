@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackController : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
-            other.gameObject.GetComponent<EnemyController>().Damage();
+            other.gameObject.GetComponent<EnemyController>().Damage(PlayerController.Instance.AttackPower);
         }
     }
 }

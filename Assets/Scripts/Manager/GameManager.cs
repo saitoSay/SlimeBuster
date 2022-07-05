@@ -32,8 +32,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
         GameStart();
-        FadeController.StartFadeIn();
     }
     private void Update()
     {
@@ -42,9 +44,7 @@ public class GameManager : MonoBehaviour
             m_timer += Time.deltaTime;
             if (m_timer > m_offTime)
             {
-                GameObject audioObj = GameObject.Find("Audio Source");
-                Destroy(audioObj);
-                SceneChanger.LoadScene("EndScene");
+                GameEnd();
             }
         }
     }
@@ -54,9 +54,17 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         EventManager.GameStart();
-        //m_enemyCount = m_enemyArray.Length;
-        //m_missionTextObj.text = m_missionText + m_enemyCount.ToString();
+        FadeController.StartFadeIn();
+        SetEnemyCount();
         m_inGame = true;
+    }
+    /// <summary>
+    /// ゲーム終了処理
+    /// </summary>
+    public void GameEnd()
+    {
+        EventManager.GameEnd();
+        SceneChanger.LoadScene("EndScene");
     }
     /// <summary>
     /// 残敵数を設定する
@@ -64,6 +72,7 @@ public class GameManager : MonoBehaviour
     public void SetEnemyCount()
     {
         m_enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        m_missionTextObj.text = m_missionText + m_enemyCount.ToString();
     }
     /// <summary>
     /// 残りの敵数を減らす処理

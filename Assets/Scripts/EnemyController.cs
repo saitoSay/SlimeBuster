@@ -67,12 +67,12 @@ public class EnemyController : MonoBehaviour
         m_damageFrag = false;
         m_anim.ResetTrigger("AttackFrag");
     }
-    public void Damage()
+    public void Damage(int damage)
     {
         audioSource.PlayOneShot(m_damageSound);
         m_damageFrag = true;
         m_lifeGauge.gameObject.SetActive(true);
-        m_life -= 3;
+        m_life -= damage;
         if (m_life <= 0)
         {
             m_dieFrag = true;
