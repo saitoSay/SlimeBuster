@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ゲームオーバー時に呼びだすPlayerのPrefabにアタッチする
+/// </summary>
 public class PlayerGameoverController : MonoBehaviour
 {
     AudioSource audioSource;

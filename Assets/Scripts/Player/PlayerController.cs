@@ -9,20 +9,20 @@ using DG.Tweening;
 [RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
-    /// <summary>移動速度</summary>
+    [Tooltip("移動速度")]
     [SerializeField] float m_movingSpeed = 5f;
-    /// <summary>回転速度</summary>
+    [Tooltip("回転速度")]
     [SerializeField] float m_turnSpeed = 3f;
     Rigidbody m_rb;
     Animator m_anim;
-    /// <summary>攻撃時の当たり判定</summary>
+    [Tooltip("攻撃時の当たり判定")]
     [SerializeField] GameObject m_attackCollider = null;
     [Tooltip("攻撃力")]
     [SerializeField] int m_attackPower = 3;
     public int AttackPower { get => m_attackPower; }
-    /// <summary>現在の体力</summary>
+    [Tooltip("現在の体力")]
     [SerializeField] int m_life = 1;
-    /// <summary>体力の最大値</summary>
+    [Tooltip("体力の最大値")]
     [SerializeField] int m_maxLife = 2;
     [SerializeField] Slider m_lifeGauge = null;
     EnemyDetector m_enemyDetector = null;
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = Vector3.forward * v + Vector3.right * h;
         if (Input.GetButtonDown("Fire1"))
         {
-            if (EnemyDetector.m_lockonFrag)
+            if (m_enemyDetector.m_lockonFrag)
             {
                 this.transform.LookAt(m_enemyDetector.Target.transform.position);
             }
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
     public void Damage()
     {
-        m_life -= 1;
+        m_life--;
         m_anim.Play("Damaged");
         DOTween.To(() => m_lifeGauge.value,
             l =>

@@ -3,6 +3,7 @@
 /// <summary>音の管理をするシングルトンのクラス</summary>
 public class SoundManager : MonoBehaviour
 {
+    AudioSource m_audioSource;
     private static SoundManager instance;
     public static SoundManager Instance
     {

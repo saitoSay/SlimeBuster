@@ -1,23 +1,21 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EndSceneController : MonoBehaviour
 {
-    [SerializeField]float m_timer = 0;
-    
+    [SerializeField] float m_waitTime;
 
-    void Update()
+    private void Start()
     {
-        m_timer += Time.deltaTime;
-        if (m_timer > 3)
+        StartCoroutine(WaitInput(m_waitTime));
+    }
+    IEnumerator WaitInput(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        this.gameObject.SetActive(true);
+        if (Input.anyKey)
         {
-            this.gameObject.SetActive(true);
-            if (Input.anyKey)
-            {
-                SceneChanger.LoadScene("TitleScene");
-            }
+            SceneChanger.LoadScene("TitleScene");
         }
     }
 }

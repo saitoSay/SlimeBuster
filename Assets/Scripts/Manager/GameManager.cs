@@ -3,17 +3,17 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static bool m_inGame = true;
+    float m_timer;
+    int m_enemyCount;
     [SerializeField] GameObject m_playerPrefab;
     [SerializeField] GameObject m_playerPos;
-    int m_enemyCount;
     [Tooltip("ゲームをクリアしてからシーン遷移するまでの時間")]
     [SerializeField] float m_offTime;
-    float m_timer = 0;
     [Tooltip("目標テキストのオブジェクト")]
     [SerializeField] Text m_missionTextObj;
     [Tooltip("目標テキスト")]
     [SerializeField] string m_missionText;
+    public static bool InGame { get; private set; }
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    void Awake()
+    private void Awake()
     {
         instance = this;
     }
@@ -41,7 +41,9 @@ public class GameManager : MonoBehaviour
     {
         if (m_enemyCount <= 0)
         {
+            //敵の数が0以下になった時に
             m_timer += Time.deltaTime;
+            //一定時間待機してから終了処理を行う
             if (m_timer > m_offTime)
             {
                 GameEnd();
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
         EventManager.GameStart();
         FadeController.StartFadeIn();
         SetEnemyCount();
-        m_inGame = true;
+        InGame = true;
     }
     /// <summary>
     /// ゲーム終了処理

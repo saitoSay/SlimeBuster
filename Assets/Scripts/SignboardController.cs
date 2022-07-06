@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>看板を操作するクラス</summary>
 public class SignboardController : MonoBehaviour
 {
+    [Tooltip("看板の動きのアニメーター")]
     [SerializeField] Animator m_anim;
     private void ShowBoard()
     {
