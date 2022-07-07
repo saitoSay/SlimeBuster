@@ -10,7 +10,7 @@ public class PlayerGameoverController : MonoBehaviour
     [Tooltip("再生するアニメーション")]
     [SerializeField] Animator anim;
     
-    public void animSpeedChange()
+    public void AnimSpeedChange()
     {
         anim.speed = 0;
     }

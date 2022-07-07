@@ -15,6 +15,10 @@ public class PlayerManager : MonoBehaviour
     }
     private void Update()
     {
+        if (!m_player.IsAlive)
+        {
+            GameManager.Instance.GameOver();
+        }
         if (Input.GetButtonDown("Fire1"))
         {
             m_player.Attack();

@@ -23,7 +23,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float m_attackRange = 2f;
 
     Animator m_enemyAnim;
-    GameObject m_player = null;
     Rigidbody m_rb;
     public bool m_frozen = false;
     bool m_isAlive = false;

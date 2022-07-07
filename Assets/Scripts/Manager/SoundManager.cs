@@ -36,6 +36,9 @@ public class SoundManager : MonoBehaviour
         }
         //音源データを読み込む
         m_soundAssets = Resources.Load<SoundAssets>("SoundAssets");
+
+        //デフォルトの音量が大きすぎたため調整
+        m_audioSource.volume = m_soundAssets.GetVolume();
     }
     /// <summary>
     /// BGMをAudioSourceに設定する

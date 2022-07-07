@@ -6,43 +6,52 @@ using UnityEngine.UI;
 /// <summary>プレイヤーアイコンの変更用コンポーネント</summary>
 public class PlayerIconController : MonoBehaviour, IEvent
 {
-    private Image m_playerIcon = null;
+    Image m_playerIcon = null;
+    bool m_damageFlag;
+    float m_timer;
+    [Tooltip("アイコンを設定する")]
     [SerializeField] Sprite[] m_sprites = null;
+    [Tooltip("アイコンが変わっている時間")]
     [SerializeField] float m_waitTime;
     const int c_defalutIconIndex = 0;
-    const int c_damegeIconindex = 1;
-    Action m_action; 
-    void Start()
+    const int c_damegeIconindex = 1; 
+     private void Start()
     {
+        m_damageFlag = false;
+        m_timer = 0;
         m_playerIcon = GetComponent<Image>();
-        //のちにイベントの登録を解除するためにメンバー変数内に格納しておく
-        m_action = () => StartCoroutine(ChangeIcon());
         SetEvent();
+    }
+    private void Update()
+    {
+        ChangeIcon();
     }
     /// <summary>
     /// アイコンを変更する
     /// </summary>
-    private IEnumerator ChangeIcon()
+    private void ChangeIcon()
     {
+        if (!m_damageFlag) return;
         m_playerIcon.sprite = m_sprites[c_damegeIconindex];
-        if (PlayerManager.Instance.GetPlayer().IsAlive)
-        {
-            //死亡時はアイコンを変えたまま関数を抜ける
-            yield break;
-        }
-        yield return new WaitForSeconds(m_waitTime);
+
+        m_timer += Time.deltaTime;
+        if (m_timer < m_waitTime || !PlayerManager.Instance.GetPlayer().IsAlive) return;
+
         m_playerIcon.sprite = m_sprites[c_defalutIconIndex];
     }
-
+    private void ChangeDamageFlag()
+    {
+        m_damageFlag = true;
+    }
     public void SetEvent()
     {
-        PlayerController.OnDamage += m_action;
+        PlayerController.OnDamage += ChangeDamageFlag;
         EventManager.OnGameClear += RemoveEvent;
     }
 
     public void RemoveEvent()
     {
-        PlayerController.OnDamage -= m_action;
+        PlayerController.OnDamage -= ChangeDamageFlag;
         EventManager.OnGameClear -= RemoveEvent;
     }
 }

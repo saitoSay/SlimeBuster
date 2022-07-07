@@ -109,17 +109,20 @@ public class PlayerController : MonoBehaviour, IEvent
     /// <summary>
     /// 攻撃判定を出す
     /// </summary>
-    public void BiginAttack()
+    public void SetAttackCollider()
     {
         m_attackCollider.SetActive(true);
     }
     /// <summary>
     /// 攻撃判定を消す
     /// </summary>
-    public void EndAttack()
+    public void ResetAttackCollider()
+    {
+        m_attackCollider.SetActive(false);
+    }
+    public void AttackEnd()
     {
         m_isAttacking = false;
-        m_attackCollider.SetActive(false);
     }
 
     /// <summary>
@@ -159,7 +162,6 @@ public class PlayerController : MonoBehaviour, IEvent
     private void Dead()
     {
         IsAlive = false;
-        GameManager.Instance.GameOver();
         SoundManager.Instance.PlayOneShot("Dead");
         //オブジェクトを非表示にし、ゲームオーバー用のプレハブと入れ替える
         gameObject.SetActive(false);
