@@ -28,3 +28,7 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: 48f945eaabaa941da8b22c03b441664a, type: 3}
     - Key: Select
       Value: {fileID: 8300000, guid: 3608ec7d28061604e8acaaf49d9664ed, type: 3}
+    - Key: Dead
+      Value: {fileID: 8300000, guid: 14442038946004af3aaf906b64944b5f, type: 3}
+    - Key: Hit
+      Value: {fileID: 8300000, guid: d5d57c952956c0646887b0573780db47, type: 3}

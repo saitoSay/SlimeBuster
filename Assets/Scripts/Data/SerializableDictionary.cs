@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+//ディクショナリーをインスペクターに表示させるためのクラス
+//下記URL参照
+//https://qiita.com/k_yanase/items/fb64ccfe1c14567a907d
+
 namespace Serialize
 {
 

@@ -661,8 +661,6 @@ MonoBehaviour:
   m_maxSpeed: 1
   m_targetRange: 6
   m_attackRange: 1
-  m_detectInterval: 1
-  m_turnSpeed: 3
   m_damageFrag: 0
   m_damageSound: {fileID: 8300000, guid: d5d57c952956c0646887b0573780db47, type: 3}
 --- !u!1001 &6176652713149790669
@@ -710,15 +708,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4023215848608658, guid: 55776efecb0cd134ea5f418c2f97a705, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.61
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4023215848608658, guid: 55776efecb0cd134ea5f418c2f97a705, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4023215848608658, guid: 55776efecb0cd134ea5f418c2f97a705, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4023215848608658, guid: 55776efecb0cd134ea5f418c2f97a705, type: 3}
       propertyPath: m_LocalRotation.x

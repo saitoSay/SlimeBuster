@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// ゲームシーンを管理するクラス
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     float m_timer;
@@ -63,7 +66,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// ゲーム開始処理
     /// </summary>
-    public void GameStart()
+    private void GameStart()
     {
         EventManager.GameStart();
         SetEnemyCount();
@@ -93,7 +96,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 残敵数を設定する
     /// </summary>
-    public void SetEnemyCount()
+    private void SetEnemyCount()
     {
         m_enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         m_missionTextObj.text = m_missionText + m_enemyCount.ToString();

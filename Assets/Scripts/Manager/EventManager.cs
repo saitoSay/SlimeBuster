@@ -18,5 +18,20 @@ public class EventManager
     /// <summary>ゲームクリア時に呼ぶ</summary>
     public static void GameClear() => OnGameClear?.Invoke();
     /// <summary>ゲームオーバー時に呼ぶ</summary>
-    public static void GameOver() => OnGameClear?.Invoke();
+    public static void GameOver() => OnGameOver?.Invoke();
+}
+/// <summary>
+/// イベントを登録するクラスに実装するインターフェース
+/// </summary>
+interface IEvent
+{
+    /// <summary>
+    /// イベントを登録する
+    /// </summary>
+    void SetEvent();
+    /// <summary>
+    /// イベントを削除する
+    /// </summary>
+    void RemoveEvent();
+
 }
