@@ -4,16 +4,19 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     float m_timer;
+    /// <summary>残敵数</summary>
     int m_enemyCount;
-    [SerializeField] GameObject m_playerPrefab;
-    [SerializeField] GameObject m_playerPos;
+    /// <summary>ゲームクリア判定</summary>
+    bool m_isClear;
+    bool m_inGame;
     [Tooltip("ゲームをクリアしてからシーン遷移するまでの時間")]
     [SerializeField] float m_offTime;
     [Tooltip("目標テキストのオブジェクト")]
     [SerializeField] Text m_missionTextObj;
     [Tooltip("目標テキスト")]
     [SerializeField] string m_missionText;
-    public static bool InGame { get; private set; }
+    [Tooltip("再生するBGMのKey")]
+    [SerializeField] string m_bgmKey;
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -39,14 +42,21 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        if (m_enemyCount <= 0)
+        if (!m_inGame)
         {
-            //敵の数が0以下になった時に
+            //シーン遷移するまでの時間を計測する
             m_timer += Time.deltaTime;
-            //一定時間待機してから終了処理を行う
+            //一定時間待機してからシーン遷移を行う
             if (m_timer > m_offTime)
             {
-                GameEnd();
+                if (m_isClear)
+                {
+                    SceneChanger.LoadScene("EndScene");
+                }
+                else
+                {
+                    SceneChanger.LoadScene("GameScene");
+                }
             }
         }
     }
@@ -56,17 +66,29 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         EventManager.GameStart();
-        FadeController.StartFadeIn();
         SetEnemyCount();
-        InGame = true;
+        SoundManager.Instance.PlayBGM(m_bgmKey);
+        m_inGame = true;
     }
     /// <summary>
-    /// ゲーム終了処理
+    /// ゲームクリア処理
     /// </summary>
-    public void GameEnd()
+    public void GameClear()
     {
-        EventManager.GameEnd();
-        SceneChanger.LoadScene("EndScene");
+        EventManager.GameClear(); 
+        m_inGame = false;
+        //クリア判定の設定
+        m_isClear = true;
+    }
+    /// <summary>
+    /// ゲームオーバー処理
+    /// </summary>
+    public void GameOver()
+    {
+        EventManager.GameOver();
+        m_inGame = false;
+        //クリア判定の設定
+        m_isClear = false;
     }
     /// <summary>
     /// 残敵数を設定する
@@ -84,5 +106,9 @@ public class GameManager : MonoBehaviour
         m_enemyCount--;
         //表示テキストを更新
         m_missionTextObj.text = m_missionText + m_enemyCount.ToString();
+        if(m_enemyCount <= 0)
+        {
+            GameClear();
+        }
     }
 }

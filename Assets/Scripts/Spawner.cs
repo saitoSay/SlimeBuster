@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         EventManager.OnGameStart += Spawn;
-        EventManager.OnGameEnd += () => EventManager.OnGameStart -= Spawn;
+        EventManager.OnGameClear += () => EventManager.OnGameStart -= Spawn;
     }
     public void Spawn()
     {

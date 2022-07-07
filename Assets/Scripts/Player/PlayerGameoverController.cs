@@ -7,14 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerGameoverController : MonoBehaviour
 {
-    AudioSource audioSource;
-    [SerializeField] AudioClip sound1;
+    [Tooltip("再生するアニメーション")]
     [SerializeField] Animator anim;
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(sound1);
-    }
     
     public void animSpeedChange()
     {

@@ -7,11 +7,16 @@ public class EventManager
 {
     /// <summary>ゲーム開始処理を登録する</summary>
     public static event Action OnGameStart;
-    /// <summary>ゲーム終了処理を登録する</summary>
-    public static event Action OnGameEnd;
+    /// <summary>ゲームクリア処理を登録する</summary>
+    public static event Action OnGameClear;
+    /// <summary>ゲームオーバー処理を登録する</summary>
+    public static event Action OnGameOver
+        ;
 
     /// <summary>ゲーム開始時に呼ぶ</summary>
     public static void GameStart() => OnGameStart?.Invoke();
-    /// <summary>ゲーム終了時に呼ぶ</summary>
-    public static void GameEnd() => OnGameEnd?.Invoke();
+    /// <summary>ゲームクリア時に呼ぶ</summary>
+    public static void GameClear() => OnGameClear?.Invoke();
+    /// <summary>ゲームオーバー時に呼ぶ</summary>
+    public static void GameOver() => OnGameClear?.Invoke();
 }

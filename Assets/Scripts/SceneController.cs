@@ -1,33 +1,34 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using DG.Tweening;
+
 public class SceneController : MonoBehaviour
 {
-    AudioSource m_audioSource;
-    [SerializeField] AudioClip m_sound;
-    Animator m_anim;
-    bool m_flag = false;
-    
+    [Tooltip("キー入力を受け付けるまでの待ち時間")]
+    [SerializeField] float m_waitKeyTime;
+    [Tooltip("遷移するシーン名")]
+    [SerializeField] string m_sceneName;
+    [Tooltip("再生するBGMのkey")]
+    [SerializeField] string m_bgmKey;
+    [Tooltip("決定時のSEのkey")]
+    [SerializeField] string m_selectSeKey;
+    [Tooltip("表示するtext")]
+    [SerializeField] Text m_text; 
+
     private void Start()
     {
-        m_anim = GetComponent<Animator>();
-        m_flag = false;
-        m_audioSource = GetComponent<AudioSource>();
+        StartCoroutine(WaitInput(m_waitKeyTime));
+        SoundManager.Instance.PlayBGM(m_bgmKey);
     }
-    private void Update()
+    IEnumerator WaitInput(float waitTime)
     {
-        if (Input.anyKeyDown && !m_flag)
+        yield return new WaitForSeconds(waitTime);
+        m_text.gameObject.SetActive(true);
+        while(!Input.anyKey)
         {
-            m_anim.SetBool("Trigger", true);
-            m_flag = true;
-            m_audioSource.PlayOneShot(m_sound);
+            yield return null;
         }
-    }
-    public void LordGameScene()
-    {
-        SceneManager.LoadScene("GameScene");
+        SoundManager.Instance.PlayOneShot(m_selectSeKey);
+        FadeController.StartFadeOutIn(() => SceneChanger.LoadScene(m_sceneName));
     }
 }

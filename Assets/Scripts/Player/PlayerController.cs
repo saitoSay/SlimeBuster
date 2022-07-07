@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -13,40 +12,36 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float m_movingSpeed = 5f;
     [Tooltip("回転速度")]
     [SerializeField] float m_turnSpeed = 3f;
-    Rigidbody m_rb;
-    Animator m_anim;
     [Tooltip("攻撃時の当たり判定")]
     [SerializeField] GameObject m_attackCollider = null;
-    [Tooltip("攻撃力")]
-    [SerializeField] int m_attackPower = 3;
-    public int AttackPower { get => m_attackPower; }
     [Tooltip("現在の体力")]
     [SerializeField] int m_life = 1;
     [Tooltip("体力の最大値")]
     [SerializeField] int m_maxLife = 2;
+    [Tooltip("攻撃力")]
+    [SerializeField] int m_attackPower = 3;
+    public int AttackPower { get => m_attackPower; }
     [SerializeField] Slider m_lifeGauge = null;
+    Rigidbody m_rb;
+    Animator m_anim;
     EnemyDetector m_enemyDetector = null;
+    bool m_isAlive;
 
     /// <summary>プレイヤーの情報</summary>
-    public static PlayerController Instance { get; private set; }
-    public bool m_damageFrag = false;
-    public bool m_gameoverFrag = false;
-
-    AudioSource audioSource;
-    [SerializeField] AudioClip m_attackSound;
-    [SerializeField] AudioClip m_damageSound;
-    [SerializeField] AudioClip m_dieSound;
-    [SerializeField] AudioClip m_slashSound;
-
+    [Tooltip("ゲームオーバー時に切り替えるプレハブ")]
     [SerializeField] GameObject m_gameoverPrefab;
 
+    public static event Action OnDamage;
+    public static void Damage() => OnDamage?.Invoke();
+    public static PlayerController Instance { get; private set; }
     void Start()
     {
         Instance = this;
-        audioSource = GetComponent<AudioSource>();
         m_rb = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
         m_enemyDetector = GetComponent<EnemyDetector>();
+        OnDamage += SubHp;
+        m_isAlive = true;
     }
 
     void Update()
@@ -108,20 +103,19 @@ public class PlayerController : MonoBehaviour
         m_attackCollider.SetActive(false);
     }
 
-    public void Damage()
+    private void SubHp()
     {
         m_life--;
         m_anim.Play("Damaged");
+        //DOTweenを使い、HPゲージを滑らかに減らす
         DOTween.To(() => m_lifeGauge.value,
             l =>
             {
                 if (m_life <= 0)
                 {
-                    this.gameObject.SetActive(false);
-                    if (!m_gameoverFrag)
+                    if (m_isAlive)
                     {
-                        Instantiate(m_gameoverPrefab, this.gameObject.transform.position, this.transform.rotation);
-                        m_gameoverFrag = true;
+                        Dead();
                     }
                 }
                 m_lifeGauge.value = l;
@@ -130,12 +124,19 @@ public class PlayerController : MonoBehaviour
             1f);
 
     }
+    private void Dead()
+    {
+        m_isAlive = false;
+        GameManager.Instance.GameOver();
+        gameObject.SetActive(false);
+        Instantiate(m_gameoverPrefab, this.gameObject.transform.position, this.transform.rotation);
+    }
     public void AttackSoundPlay()
     {
-        audioSource.PlayOneShot(m_attackSound);
+        SoundManager.Instance.PlayOneShot("Attack");
     }
     public void DamageSoundPlay()
     {
-        audioSource.PlayOneShot(m_damageSound);
+        SoundManager.Instance.PlayOneShot("Damage");
     }
 }

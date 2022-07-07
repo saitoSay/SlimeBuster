@@ -27,6 +27,7 @@ public class FadeController : MonoBehaviour
                 var obj = new GameObject("FadeCanvas");
                 obj.AddComponent<RectTransform>();
                 var canvas = obj.AddComponent<Canvas>();
+                //手前に表示するために描画順をできるだけ前にする
                 canvas.sortingOrder = 20;
                 canvas.renderMode = RenderMode.ScreenSpaceOverlay;
                 var fadeController = obj.AddComponent<FadeController>();
@@ -34,6 +35,7 @@ public class FadeController : MonoBehaviour
                 imageObj.transform.SetParent(obj.transform);
                 var imageRect = imageObj.AddComponent<RectTransform>();
                 var image = imageObj.AddComponent<Image>();
+                //中央にImageを移動させる
                 imageRect.sizeDelta = new Vector2(2000, 1100);
                 imageRect.localPosition = Vector2.zero;
                 image.color = Color.black;
