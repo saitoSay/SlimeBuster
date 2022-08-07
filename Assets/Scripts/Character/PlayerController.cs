@@ -9,33 +9,31 @@ using DG.Tweening;
 [RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class PlayerController : MonoBehaviour, IEvent
 {
-    [Tooltip("移動速度")]
-    [SerializeField] float m_movingSpeed = 5f;
-    [Tooltip("回転速度")]
-    [SerializeField] float m_turnSpeed = 3f;
+    [Tooltip("プレイヤーのデータ")]
+    [SerializeField] PlayerData m_playerData;
+
     [Tooltip("攻撃時の当たり判定")]
     [SerializeField] GameObject m_attackCollider = null;
-    [Tooltip("現在の体力")]
-    [SerializeField] int m_life = 1;
-    [Tooltip("体力の最大値")]
-    [SerializeField] int m_maxLife = 2;
-    [Tooltip("攻撃力")]
-    [SerializeField] int m_attackPower = 3;
+    [Tooltip("ゲームオーバー時に切り替えるプレハブ")]
+    [SerializeField] GameObject m_gameoverPrefab;
+
+    /// <summary>現在の体力</summary>
+    int m_life = 1;
     /// <summary>攻撃力を取得するためのプロパティ</summary>
-    public int AttackPower { get => m_attackPower; }
+    public int AttackPower { get => m_playerData.GetAttackPower(); }
     /// <summary>プレイヤーが生きているか確認するプロパティ</summary>
     public bool IsAlive { get; private set; }
     /// <summary>体力ゲージ</summary>
     Slider m_lifeGauge = null;
+
     Rigidbody m_rb;
     Animator m_anim;
     EnemyDetector m_enemyDetector = null;
+
     /// <summary>攻撃中か確認する</summary>
     bool m_isAttacking;
-    /// <summary>hpゲージを滑らかに減らす時間</summary>
+    /// <summary>hpゲージを減らす時間</summary>
     const float c_hpTweenTime = 1f;
-    [Tooltip("ゲームオーバー時に切り替えるプレハブ")]
-    [SerializeField] GameObject m_gameoverPrefab;
 
     public static event Action OnDamage;
     public static void Damage() => OnDamage?.Invoke();
@@ -78,7 +76,7 @@ public class PlayerController : MonoBehaviour, IEvent
             dir.y = 0;
 
             //速度を設定する
-            Vector3 velo = dir.normalized * m_movingSpeed;
+            Vector3 velo = dir.normalized * m_playerData.GetMovingSpeed();
             m_rb.velocity = velo;
 
             //攻撃中は回転しないようリターン
@@ -86,7 +84,8 @@ public class PlayerController : MonoBehaviour, IEvent
             Quaternion targetRotation = Quaternion.LookRotation(dir);
 
             //Slerpを使い回転処理を滑らかにする
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation, Time.deltaTime * m_turnSpeed);
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation ,
+                Time.deltaTime * m_playerData.GetTurnSpeed());
 
         }
         //現在の速度に応じたアニメーションを行うために速度の大きさをアニメーターに渡す
@@ -151,7 +150,7 @@ public class PlayerController : MonoBehaviour, IEvent
                 m_lifeGauge.value = value;
             },
             //現在の体力と最大体力の割合まで減らす
-            (float)m_life / m_maxLife,
+            (float)m_life / m_playerData.GetMaxLife(),
             //処理にかける時間を設定
             c_hpTweenTime);
 

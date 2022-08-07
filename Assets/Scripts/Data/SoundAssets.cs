@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>音源のデータをディクショナリーとして保存するクラス</summary>
-[CreateAssetMenu(menuName = "SoundAssets")]
+[CreateAssetMenu(menuName = "Data/SoundAssets")]
 public class SoundAssets : ScriptableObject
 {
     [Tooltip("Key string : Value AudioClipのDictionary")]

@@ -654,15 +654,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b178550ec6ce0474bab82d876d147908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_life: 2
-  m_maxLife: 7
+  m_enemyData: {fileID: 11400000, guid: f61d8284942dbc84fbe05ebb2d89b8c2, type: 2}
   m_lifeGauge: {fileID: 1371618860}
-  m_movePower: 30
-  m_maxSpeed: 1
-  m_targetRange: 6
-  m_attackRange: 1
-  m_damageFrag: 0
-  m_damageSound: {fileID: 8300000, guid: d5d57c952956c0646887b0573780db47, type: 3}
+  m_frozen: 0
 --- !u!1001 &6176652713149790669
 PrefabInstance:
   m_ObjectHideFlags: 0

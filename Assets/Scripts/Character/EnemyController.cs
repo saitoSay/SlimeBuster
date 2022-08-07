@@ -7,31 +7,26 @@ using DG.Tweening;
 /// </summary>
 public class EnemyController : MonoBehaviour
 {
-    /// <summary>現在の体力</summary>
-    int m_currentLife = 1;
-    [Tooltip("最大体力")]
-    [SerializeField] int m_maxLife = 2;
-    [Tooltip("加速する速さ")]
-    [SerializeField] float m_movePower = 10f;
-    [Tooltip("最高速度")]
-    [SerializeField] float m_maxSpeed = 2f;
+    [Tooltip("敵のデータ")]
+    [SerializeField] EnemyData m_enemyData;
     [Tooltip("体力ゲージ")]
     [SerializeField] Slider m_lifeGauge = null;
-    [Tooltip("プレイヤーを視認できる範囲")]
-    [SerializeField] float m_targetRange = 4f;
-    [Tooltip("プレイヤーに攻撃できる範囲")]
-    [SerializeField] float m_attackRange = 2f;
+
+    /// <summary>現在の体力</summary>
+    int m_currentLife = 1;
 
     Animator m_enemyAnim;
     Rigidbody m_rb;
+    /// <summary>行動中か判定するbool</summary>
     public bool m_frozen = false;
     bool m_isAlive = false;
+    /// <summary>hpゲージを減らす時間</summary>
     const float c_hpTweenTime = 1;
 
     void Start()
     {
         //現在の体力を設定
-        m_currentLife = m_maxLife;
+        m_currentLife = m_enemyData.GetMaxLife();
         //初期状態では体力ゲージが見えないように設定
         m_lifeGauge.gameObject.SetActive(false);
         m_rb = GetComponent<Rigidbody>();
@@ -52,21 +47,21 @@ public class EnemyController : MonoBehaviour
         //プレイヤーとの距離を計算
         float distance = Vector3.Distance(this.transform.position, playerPos);
 
-        if (distance < m_targetRange && !m_frozen)
+        if (distance < m_enemyData.GetTargetRange() && !m_frozen)
         {
             //プレイヤーのいる方向を向く
             Vector3 dir = playerPos - this.transform.position;
             dir.y = 0;
             this.transform.forward = dir;
 
-            if (distance < m_attackRange)
+            if (distance < m_enemyData.GetAttackRange())
             {
                 Attack();
             }
-            else if (m_rb.velocity.magnitude < m_maxSpeed)
+            else if (m_rb.velocity.magnitude < m_enemyData.GetMaxSpeed())
             {
                 //最高速度未満の場合は加速する
-                m_rb.AddForce(this.transform.forward * m_movePower);
+                m_rb.AddForce(this.transform.forward * m_enemyData.GetMovePower());
             }
         }
         else
@@ -117,7 +112,7 @@ public class EnemyController : MonoBehaviour
                 m_lifeGauge.value = value;
             },
             //現在の体力と最大体力の割合まで減らす
-            (float)m_currentLife / m_maxLife,
+            (float)m_currentLife / m_enemyData.GetMaxLife(),
             //処理にかける時間を設定
             c_hpTweenTime);
     }
